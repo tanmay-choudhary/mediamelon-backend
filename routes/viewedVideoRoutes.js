@@ -11,7 +11,7 @@ const {
   getVideoById,
 } = require("../controllers/videosController");
 router.post("/viewed-video", viewVideo);
-router.get("/last-10-viewed-videos/:customerId", getLastViewedVideos);
+router.get("/last-10-viewed-videos/:user_id", getLastViewedVideos);
 router.get("/videos", getAllVideosController);
 router.post("/addvideos", createVideoController);
 router.get("/getVideoById/:id", getVideoById);

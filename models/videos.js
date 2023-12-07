@@ -23,6 +23,21 @@ async function getVideoByIdModel(videoId) {
   }
 }
 
+async function getVideosByIdsModel(videoIds) {
+  try {
+    const query = "SELECT * FROM melon_videos WHERE video_id = ANY($1)";
+    const values = [videoIds];
+    const result = await pool.query(query, values);
+    return result.rows; // Returning an array of videos
+  } catch (error) {
+    console.error(
+      `Error retrieving videos with IDs ${videoIds.join(", ")}:`,
+      error
+    );
+    throw error;
+  }
+}
+
 async function insertVideo(video) {
   try {
     const { title, url } = video;
@@ -46,4 +61,5 @@ module.exports = {
   getAllVideos,
   insertVideo,
   getVideoByIdModel,
+  getVideosByIdsModel,
 };

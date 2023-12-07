@@ -6,8 +6,8 @@ const {
 
 async function viewVideo(req, res) {
   try {
-    const { videoTitle, customerId } = req.body;
-    await addViewedVideo(videoTitle, customerId);
+    const { video_id, user_id } = req.body;
+    await addViewedVideo(video_id, user_id);
     res.status(200).json({ message: "Video viewed successfully" });
   } catch (error) {
     console.error("Error viewing video:", error);

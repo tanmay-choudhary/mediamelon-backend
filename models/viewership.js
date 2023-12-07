@@ -1,11 +1,12 @@
 // models/viewership.js
 const { connection: pool } = require("./db");
-
-async function addViewedVideo(videoTitle, customerId) {
+const { v4: uuidv4 } = require("uuid");
+async function addViewedVideo(video_id, user_id) {
   const timestamp = Math.floor(Date.now() / 1000); // Epoch time in seconds
+  const id = uuidv4();
   const query =
-    "INSERT INTO viewership (timestamp, video_title, customer_id) VALUES ($1, $2, $3)";
-  await pool.query(query, [timestamp, videoTitle, customerId]);
+    "INSERT INTO viewed_videos (view_id, video_id, user_id) VALUES ($1, $2, $3)";
+  await pool.query(query, [id, video_id, user_id]);
 }
 
 // Assuming you have a connection pool (`pool`) established already

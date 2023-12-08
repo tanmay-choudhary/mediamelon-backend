@@ -1,11 +1,12 @@
 const { Pool } = require("pg");
+require("dotenv").config(); // Load environment variables from a .env file
 
 const pool = new Pool({
-  user: "postgres",
-  host: "jobscout.cyqf0foa4owe.ap-south-1.rds.amazonaws.com",
-  database: "postgres",
-  password: "JHjh2000***",
-  port: 5432, // default PostgreSQL port
+  user: process.env.DB_USER,
+  host: process.env.DB_HOST,
+  database: process.env.DB_NAME,
+  password: process.env.DB_PASSWORD,
+  port: process.env.DB_PORT, // default PostgreSQL port
   ssl: {
     rejectUnauthorized: false, // Set to true to verify SSL certificate
   },
@@ -24,4 +25,5 @@ pool
   .catch((err) => {
     console.error("Error connecting to the database!");
   });
+
 exports.connection = pool;

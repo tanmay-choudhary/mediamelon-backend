@@ -1,5 +1,7 @@
 const { connection: pool } = require("./db");
 const { v4: uuidv4 } = require("uuid");
+const crypto = require("crypto");
+
 async function getAllVideos() {
   try {
     const query = "SELECT * FROM melon_videos";
@@ -43,7 +45,10 @@ async function insertVideo(video) {
     const { title, url } = video;
 
     // Generate a unique id using uuid
-    const id = uuidv4();
+    const timestamp = Date.now().toString();
+    const hash = crypto.createHash("md5").update(timestamp).digest("hex");
+    const id = hash.substr(0, 8); // Use the first 8 characters for simplicity
+    //const id = uuidv4();
 
     const query =
       "INSERT INTO melon_videos (video_id, title, video_url, view_count) VALUES ($1, $2, $3, $4) RETURNING *";

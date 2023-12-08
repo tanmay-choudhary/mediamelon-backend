@@ -3,7 +3,7 @@ const {
   addViewedVideo,
   getLast10ViewedVideos,
 } = require("../models/viewership");
-const { getVideosByIdsModel } = require("../models/videos");
+const { getVideoByIdModel } = require("../models/videos");
 
 const cache = new Map();
 const cacheOrder = [];
@@ -45,7 +45,12 @@ async function getLastViewedVideos(req, res) {
 
       const cachedResult = cache.get(user_id);
       const videoIds = cachedResult.map((video) => video.video_id);
-      let videos = await getData(videoIds);
+      let videos = [];
+      for (let i = 0; i < videoIds.length; i++) {
+        let data = await getData(videoIds[i]);
+        videos.push(data);
+      }
+      //let videos =
       res.status(200).json(videos);
       return;
     }
@@ -70,9 +75,9 @@ async function getLastViewedVideos(req, res) {
   }
 }
 
-async function getData(videoIds) {
+async function getData(videoId) {
   try {
-    return await getVideosByIdsModel(videoIds);
+    return await getVideoByIdModel(videoId);
   } catch (e) {
     console.log(e);
   }

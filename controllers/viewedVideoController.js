@@ -1,4 +1,3 @@
-// controllers/viewedVideoController.js
 const {
   addViewedVideo,
   getLast10ViewedVideos,

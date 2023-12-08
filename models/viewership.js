@@ -33,7 +33,6 @@ async function getViewByVideoAndUser(video_id, user_id) {
 function currentDateTime() {
   return date.format(new Date(), "YYYY-MM-DD HH:mm:ss");
 }
-// Assuming you have a connection pool (`pool`) established already
 
 async function getLast10ViewedVideos(user_id) {
   const query =
